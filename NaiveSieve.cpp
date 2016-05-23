@@ -3,8 +3,8 @@
 
 
 NaiveSieve::NaiveSieve() :
-    PrimeSieve(2),
-    m_testNumber(2)
+    PrimeSieve(FIRST_PRIME),
+    m_testNumber(FIRST_PRIME)
 {
 }
 

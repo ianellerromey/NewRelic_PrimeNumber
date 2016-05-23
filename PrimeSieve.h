@@ -10,6 +10,7 @@ class PrimeSieve
         virtual int const GetCurrentPrime() const;
 
     protected:
+        static int FIRST_PRIME;
         int m_currentPrime;
 };
 

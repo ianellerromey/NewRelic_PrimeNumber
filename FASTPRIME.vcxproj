@@ -120,12 +120,14 @@
     <ClCompile Include="PrimeSieve.cpp" />
     <ClCompile Include="PrimeThread.cpp" />
     <ClCompile Include="PseudoEratosthenesSieve.cpp" />
+    <ClCompile Include="PureEratosthenesSieve.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NaiveSieve.h" />
     <ClInclude Include="PrimeSieve.h" />
     <ClInclude Include="PrimeThread.h" />
     <ClInclude Include="PseudoEratosthenesSieve.h" />
+    <ClInclude Include="PureEratosthenesSieve.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

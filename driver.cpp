@@ -2,6 +2,7 @@
 #include "PrimeThread.h"
 #include "NaiveSieve.h"
 #include "PseudoEratosthenesSieve.h"
+#include "PureEratosthenesSieve.h"
 
 #include <iostream> // std::cout, std::cin
 #include <iomanip> // std::fixed, std::setprecision
@@ -11,7 +12,8 @@
 
 // the NaiveSieve is just for the sake of comparison; it is SIGNIFICANTLY slower than the PseudoEratosthenesSieve
 //#define PRIME_SIEVE NaiveSieve
-#define PRIME_SIEVE PseudoEratosthenesSieve
+//#define PRIME_SIEVE PseudoEratosthenesSieve
+#define PRIME_SIEVE PureEratosthenesSieve
 
 #define CurrentTimeXY 0, 0
 #define CurrentPrimeXY 0, 2
