@@ -1,127 +1,70 @@
 
-#include <climits>
-#include <iostream>
-#include <thread>
-#include <ctime>
+#include "PrimeThread.h"
+#include "NaiveSieve.h"
+#include "PseudoEratosthenesSieve.h"
 
-#define PRIME_DIGITS 100000000
+#include <iostream> // std::cout, std::cin
+#include <iomanip> // std::fixed, std::setprecision
+#include <ctime> // std::clock
+#include <Windows.h> // SetConsoleCursorPosition, etc.
 
-/*struct AllNumbers
+
+// the NaiveSieve is just for the sake of comparison; it is SIGNIFICANTLY slower than the PseudoEratosthenesSieve
+//#define PRIME_SIEVE NaiveSieve
+#define PRIME_SIEVE PseudoEratosthenesSieve
+
+#define CurrentTimeXY 0, 0
+#define CurrentPrimeXY 0, 2
+
+
+void SetCursorXY(int x, int y)
 {
-    AllNumbers() :
-        m_currentPrime(2)
-    {
-        m_allNumbers = (int*)malloc(sizeof(int) * PRIME_DIGITS);
-        m_previousPrimes = (int*)malloc(sizeof(int) * PRIME_DIGITS);
-        m_previousPrimesLastIndex = (int*)malloc(sizeof(int) * PRIME_DIGITS);
-
-        memset(m_allNumbers, 1, sizeof(int) * PRIME_DIGITS);
-        memset(m_previousPrimes, 0, sizeof(int) * PRIME_DIGITS);
-        memset(m_previousPrimesLastIndex, 0, sizeof(int) * PRIME_DIGITS);
-
-        memset(m_allNumbers, 0, sizeof(int) * 3);
-        m_previousPrimes[0] = m_currentPrime;
-        m_previousPrimesLastIndex[0] = m_currentPrime;
-    }
-
-    void Calculate()
-    {
-        int i = 0;
-        do
-        {
-            auto prime = m_previousPrimes[i];
-            for(int start = 0, end = prime; start < end; ++start)
-            {
-                auto primeIndex = m_previousPrimesLastIndex[i] + prime;
-                if(primeIndex > PRIME_DIGITS)
-                    break;
-                m_allNumbers[primeIndex] = 0;
-                m_previousPrimesLastIndex[i] = primeIndex;
-            }
-            ++i;
-        } while(m_previousPrimes[i] != 0 && i < PRIME_DIGITS);
-
-        while(m_allNumbers[m_currentPrime] == 0) 
-        {
-            ++m_currentPrime;
-        }
-
-        m_allNumbers[m_currentPrime] = 0;
-        m_previousPrimes[i] = m_currentPrime;
-        m_previousPrimesLastIndex[i] = m_currentPrime;
-    }
-
-    int m_currentPrime;
-    int* m_allNumbers;
-    int* m_previousPrimes;
-    int* m_previousPrimesLastIndex;
-};*/
-
-/**/struct AllNumbers
-{
-    AllNumbers() :
-        m_currentPrime(2),
-        m_testNumber(2)
-    {
-    }
-
-    bool IsPrime(int number)
-    {
-        for(int i = number - 1; i > 1; --i)
-        {
-            if(number % i == 0)
-                return false;
-        }
-
-        return true;
-    }
-
-    void Calculate()
-    {
-        ++m_testNumber;
-        if(IsPrime(m_testNumber))
-            m_currentPrime = m_testNumber;
-    }
-
-    int m_currentPrime;
-    int m_testNumber;
-};/**/
-
-void calc(AllNumbers* a)
-{
-    while(true)
-    {
-        a->Calculate();
-    }
+    COORD xy = {x, y};
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), xy);
 }
+
 
 int main()
 {
+    std::cout << std::fixed << std::setprecision(3);
     auto start = std::clock();
     auto current = start;
 
-    AllNumbers a;
+    const double maximumDuration = 60;
+    double duration = 0;
     int m_lastPrime = 0;
-    std::thread t(calc, &a);
 
-    bool go = true;
-    while(go)
+    PRIME_SIEVE sieve;
+    PrimeThread thread;
+    thread.Start(&sieve);
+
+    do
     {
-        auto clock = std::clock();
-        if(((clock - start) / (double)CLOCKS_PER_SEC) >= 60)
-        {
-            go = false;
-        }
-        else if(((std::clock() - current) / (double)CLOCKS_PER_SEC) >= 1)
-        {
-            current = std::clock();
-            if(m_lastPrime != a.m_currentPrime != m_lastPrime)
-            {
-                m_lastPrime = a.m_currentPrime;
-                std::cout << m_lastPrime << "\r\n";
-            }
-        }
-    }
+        SetCursorXY(CurrentTimeXY);
+        std::cout << "Current execution duration: " << duration;
 
-    std::cout << "Maximum calculated prime in sixty seconds: " << m_lastPrime;
+        int currentPrime = sieve.GetCurrentPrime();
+        if(m_lastPrime != currentPrime)
+        {
+            m_lastPrime = currentPrime;
+            SetCursorXY(CurrentPrimeXY);
+            std::cout << "Highest calculated prime: " << m_lastPrime;
+        }
+        current = std::clock();
+    } while((duration = ((double)(current - start) / (double)CLOCKS_PER_SEC)) < maximumDuration);
+
+    // wherever we were when we ran out of time, grab that prime
+    m_lastPrime = sieve.GetCurrentPrime();
+    
+    SetCursorXY(CurrentTimeXY);
+    std::cout << "Current execution duration: " << maximumDuration;
+    SetCursorXY(CurrentPrimeXY);
+    std::cout << "Maximum calculated prime in sixty seconds: " << m_lastPrime << std::endl;
+
+    // we displayed our conclusion before stopping the calculation thread, just in case it takes a little
+    // while to close down the thread (it won't, but still)
+    thread.Stop();
+
+    std::cout << "Press any key to quit ...";
+    std::cin.get();
 }
