@@ -9,7 +9,7 @@ class PureEratosthenesSieve : public PrimeSieve
 {
     public:
         PureEratosthenesSieve();
-        ~PureEratosthenesSieve();
+        virtual ~PureEratosthenesSieve();
 
         virtual void Calculate();
 

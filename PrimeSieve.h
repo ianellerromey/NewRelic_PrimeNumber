@@ -6,6 +6,8 @@ class PrimeSieve
 {
     public:
         PrimeSieve(int currentPrime);
+        virtual ~PrimeSieve();
+
         virtual void Calculate() = 0;
         virtual int const GetCurrentPrime() const;
 

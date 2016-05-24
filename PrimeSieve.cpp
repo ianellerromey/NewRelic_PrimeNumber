@@ -11,6 +11,11 @@ PrimeSieve::PrimeSieve(int currentPrime) :
 }
 
 
+PrimeSieve::~PrimeSieve()
+{
+}
+
+
 int const PrimeSieve::GetCurrentPrime() const
 {
     return m_currentPrime;

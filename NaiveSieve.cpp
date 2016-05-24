@@ -9,6 +9,11 @@ NaiveSieve::NaiveSieve() :
 }
 
 
+NaiveSieve::~NaiveSieve()
+{
+}
+
+
 void NaiveSieve::Calculate()
 {
     ++m_testNumber;

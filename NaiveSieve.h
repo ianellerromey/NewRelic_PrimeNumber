@@ -9,6 +9,7 @@ class NaiveSieve : public PrimeSieve
 {
     public:
         NaiveSieve();
+        virtual ~NaiveSieve();
 
         virtual void Calculate();
 
