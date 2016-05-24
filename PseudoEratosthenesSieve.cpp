@@ -11,16 +11,16 @@ int PseudoEratosthenesSieve::PRIME_DIGITS = 100000000;
 PseudoEratosthenesSieve::PseudoEratosthenesSieve() :
     PrimeSieve(FIRST_PRIME)
 {
-        m_allNumbers = (int*)calloc(PRIME_DIGITS, sizeof(int));
-        // leave the zero, one, and two indices initialized to 0;
-        // set everything else to 1
-        memset(m_allNumbers + 3, 1, sizeof(int) * PRIME_DIGITS);
+    m_allNumbers = (int*)calloc(PRIME_DIGITS, sizeof(int));
+    // leave the zero, one, and two indices initialized to 0;
+    // set everything else to 1
+    memset(m_allNumbers + 3, 1, sizeof(int) * PRIME_DIGITS);
 
-        m_previousPrimes = (int*)calloc(PRIME_DIGITS, sizeof(int));
-        m_previousPrimesLastIndex = (int*)calloc(PRIME_DIGITS, sizeof(int));
+    m_previousPrimes = (int*)calloc(PRIME_DIGITS, sizeof(int));
+    m_previousPrimesLastIndex = (int*)calloc(PRIME_DIGITS, sizeof(int));
 
-        m_previousPrimes[0] = m_currentPrime;
-        m_previousPrimesLastIndex[0] = m_currentPrime;
+    m_previousPrimes[0] = m_currentPrime;
+    m_previousPrimesLastIndex[0] = m_currentPrime;
 }
 
 

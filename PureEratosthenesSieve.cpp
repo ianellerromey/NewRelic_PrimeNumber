@@ -12,10 +12,10 @@ unsigned PureEratosthenesSieve::PRIME_DIGITS = 1325000000;
 PureEratosthenesSieve::PureEratosthenesSieve() :
     PrimeSieve(FIRST_PRIME)
 {
-        m_allNumbers = (unsigned*)calloc(PRIME_DIGITS, sizeof(unsigned));
-        // leave the zero, one, and two indices initialized to 0;
-        // set everything else to 1
-        memset(m_allNumbers + 3, 1, sizeof(unsigned) * PRIME_DIGITS);
+    m_allNumbers = (unsigned*)calloc(PRIME_DIGITS, sizeof(unsigned));
+    // leave the zero, one, and two indices initialized to 0;
+    // set everything else to 1
+    memset(m_allNumbers + 3, 1, sizeof(unsigned) * PRIME_DIGITS);
 }
 
 
