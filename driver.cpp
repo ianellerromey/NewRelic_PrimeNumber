@@ -4,13 +4,13 @@
 #include "PseudoEratosthenesSieve.h"
 #include "PureEratosthenesSieve.h"
 
-#include <iostream> // std::cout, std::cin
-#include <iomanip> // std::fixed, std::setprecision
-#include <ctime> // std::clock
+#include <iostream>  // std::cout, std::cin
+#include <iomanip>   // std::fixed, std::setprecision
+#include <ctime>     // std::clock
 #include <Windows.h> // SetConsoleCursorPosition, etc.
 
 
-// the NaiveSieve is just for the sake of comparison; it is SIGNIFICANTLY slower than the PseudoEratosthenesSieve
+// the NaiveSieve and PseudoEratosthenesSieve are just for the sake of comparison; they are SIGNIFICANTLY slower than the PureEratosthenesSieve
 //#define PRIME_SIEVE NaiveSieve
 //#define PRIME_SIEVE PseudoEratosthenesSieve
 #define PRIME_SIEVE PureEratosthenesSieve
